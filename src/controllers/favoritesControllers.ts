@@ -7,7 +7,8 @@ import { ENV } from "../configs/server-config"
 
 export const getFavorites = async(req: Request, res: Response) => {
     try {
-        const token = req.headers.token?.toString()
+        // const token = req.headers.token?.toString()
+        const {token} = req.cookies
 
         if(!token){
             return res.status(StatusCodes.NOT_FOUND).json({
@@ -41,7 +42,8 @@ export const getFavorites = async(req: Request, res: Response) => {
 export const addFavorites = async(req: Request, res: Response) => {
     try {
         const {imdbID} = req.query
-        const token = req.headers.token?.toString()
+        // const token = req.headers.token?.toString()
+        const {token} = req.cookies
 
         if(!token){
             return res.status(StatusCodes.NOT_FOUND).json({
@@ -89,7 +91,8 @@ export const addFavorites = async(req: Request, res: Response) => {
 export const removeFavorites = async(req: Request, res: Response) => {
     try {
         const {imdbID} = req.query
-        const token = req.headers.token?.toString()
+        // const token = req.headers.token?.toString()
+        const {token} = req.cookies
 
         if(!token){
             return res.status(StatusCodes.NOT_FOUND).json({

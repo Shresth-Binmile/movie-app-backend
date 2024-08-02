@@ -9,7 +9,8 @@ import { where } from "sequelize"
 export const getCommentsAndRatings = async(req: Request, res: Response) => {
     try {
         const {imdbID} = req.query
-        const token = req.headers.token?.toString()
+        // const token = req.headers.token?.toString()
+        const {token} = req.cookies
 
         if(!token){
             return res.status(StatusCodes.NOT_FOUND).json({
@@ -45,7 +46,8 @@ export const addCommentsAndRatings = async(req: Request, res: Response) => {
     try {
         const {imdbID} = req.query
         const {comments, ratings} = req.body
-        const token = req.headers.token?.toString()
+        // const token = req.headers.token?.toString()
+        const {token} = req.cookies
 
         if(!token){
             return res.status(StatusCodes.NOT_FOUND).json({

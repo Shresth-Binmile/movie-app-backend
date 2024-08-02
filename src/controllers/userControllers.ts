@@ -75,7 +75,9 @@ export const loginHandler = async(req:Request, res:Response) => {
             expiresIn: '1h'
         })
 
-        return res.setHeader('token', token).status(StatusCodes.OK).json({
+        // res.cookie('token', token, {httpOnly: true})
+
+        return res.cookie('token', token, {httpOnly: true}).status(StatusCodes.OK).json({
             success: true,
             message: messages.LOGIN_SUCCESS,
             error: {},
