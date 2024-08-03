@@ -5,9 +5,20 @@ import Users from "../models/userModel"
 import jwt from 'jsonwebtoken'
 import bcryptjs, { genSalt } from 'bcryptjs'
 import { ENV } from "../configs/server-config"
+import { validationResult } from "express-validator"
 
 export const registerHandler = async(req:Request, res:Response) => {
     try {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                messages: messages.INVALID_CREDENTIALS,
+                errors: errors,
+                data: {}
+            })
+        }
+        
         const {name, password, phoneNo} = req.body
 
         const user = await Users.findOne({where: {phoneNo}})
@@ -48,6 +59,16 @@ export const registerHandler = async(req:Request, res:Response) => {
 
 export const loginHandler = async(req:Request, res:Response) => {
     try {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                messages: messages.INVALID_CREDENTIALS,
+                errors: errors,
+                data: {}
+            })
+        }
+
         const {name, password} = req.body
 
         const user = await Users.findOne({where: {name}})
