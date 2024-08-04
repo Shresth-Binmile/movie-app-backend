@@ -2,7 +2,7 @@
 const messages = {
     PROBLEM_IN_FETCH: 'Unable to fetch data. Please try again.',
     FETCH_SUCCESS: 'Data Successfully Fetched!',
-    WELCOME: 'Welcome back, User!',
+    WELCOME: 'Welcome to Movie-Explorer!',
     REGISTER_FAILED: 'Registration Unsuccessful',
     REGISTER_SUCCESS: 'Registration Successful',
     LOGIN_FAILED: 'Login Unsuccessful',

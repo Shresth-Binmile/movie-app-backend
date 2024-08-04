@@ -1,18 +1,25 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 import cookieParser from 'cookie-parser'
 import router from './routes/v1/route'
 import { ENV } from './configs/server-config'
 import {StatusCodes} from 'http-status-codes'
 import { sequelize } from './utils/connectDB'
 import messages from './utils/messages'
+import cors from 'cors'
 
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
 app.use('/api/v1', router)
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://movie-explorer-pi.vercel.app/#'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}))
 
-app.get('/', (_req, res)=>{
+app.get('/', (req:Request, res:Response)=>{
     try {
         return res.status(StatusCodes.BAD_REQUEST).json({
             success: true,
