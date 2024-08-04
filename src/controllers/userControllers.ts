@@ -41,11 +41,11 @@ export const registerHandler = async(req:Request, res:Response) => {
             phoneNo
         })
 
-        res.status(StatusCodes.CREATED).json({
+        return res.status(StatusCodes.CREATED).json({
             success: true,
             message: messages.REGISTER_SUCCESS,
             error: {},
-            data: req.body
+            data: {}
         })
     } catch (error) {
         return res.status(StatusCodes.BAD_REQUEST).json({
