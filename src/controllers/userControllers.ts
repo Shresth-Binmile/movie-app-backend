@@ -21,7 +21,7 @@ export const registerHandler = async(req:Request, res:Response) => {
         
         const {name, password, phoneNo} = req.body
 
-        const user = await Users.findOne({where: {phoneNo}})
+        const user = await Users.findOne({where: {phoneNo}})   // SELECT * FROM Users WHERE phoneNo = phoneNo;
 
         if(user){
             return res.status(StatusCodes.FORBIDDEN).json({
@@ -35,7 +35,7 @@ export const registerHandler = async(req:Request, res:Response) => {
         const salt = await bcryptjs.genSalt(10)
         const hashPassword = await bcryptjs.hash(password, salt)
 
-        const newUser = await Users.create({
+        const newUser = await Users.create({                   // INSERT INTO Users (name, password, phoneNo) VALUES (name, hashPassword, phoneNo);
             name,
             password: hashPassword,
             phoneNo
@@ -71,7 +71,7 @@ export const loginHandler = async(req:Request, res:Response) => {
 
         const {name, password} = req.body
 
-        const user = await Users.findOne({where: {name}})
+        const user = await Users.findOne({where: {name}})    // SELECT * FROM Users WHERE name = name;
         
         if(!user){
             return res.status(StatusCodes.NOT_FOUND).json({

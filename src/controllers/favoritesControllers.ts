@@ -21,7 +21,7 @@ export const getFavorites = async(req: Request, res: Response) => {
 
         const decodedToken = JSON.parse(JSON.stringify(jwt.verify(token, ENV.JWT_SECRET_KEY)))
         const userID = decodedToken.id
-        const favorites = await favs.findAll({where: {userID}})
+        const favorites = await favs.findAll({where: {userID}})     // SELECT * FROM favs WHERE userID = userID;
 
         return res.status(StatusCodes.OK).json({
             success: true,
@@ -56,7 +56,7 @@ export const addFavorites = async(req: Request, res: Response) => {
 
         const decodedToken = JSON.parse(JSON.stringify(jwt.verify(token, ENV.JWT_SECRET_KEY)))
         const userID = decodedToken.id
-        const favMovie = await favs.findOne({where: {imdbID, userID}})
+        const favMovie = await favs.findOne({where: {imdbID, userID}})     // SELECT * FROM favs WHERE userID = userID AND imdbID = imdbID;
 
         if(favMovie){
             return res.status(StatusCodes.FORBIDDEN).json({
@@ -67,7 +67,7 @@ export const addFavorites = async(req: Request, res: Response) => {
             })
         }
 
-        const newFavoriteMovie = await favs.create({
+        const newFavoriteMovie = await favs.create({                       // INSERT INTO favs (imdbID, userID) VALUES (imdbID, userID);
             imdbID,
             userID
         })
@@ -105,7 +105,7 @@ export const removeFavorites = async(req: Request, res: Response) => {
 
         const decodedToken = JSON.parse(JSON.stringify(jwt.verify(token, ENV.JWT_SECRET_KEY)))
         const userID = decodedToken.id
-        const favMovie = await favs.findOne({where: {imdbID, userID}})
+        const favMovie = await favs.findOne({where: {imdbID, userID}})         // SELECT * FROM favs WHERE imdbID = imdbID AND userID = userID;
 
         if(!favMovie){
             return res.status(StatusCodes.FORBIDDEN).json({
@@ -116,7 +116,7 @@ export const removeFavorites = async(req: Request, res: Response) => {
             })
         }
 
-        const removedMovie = await favs.destroy({where: {imdbID, userID}})
+        const removedMovie = await favs.destroy({where: {imdbID, userID}})     // DELETE FROM favs WHERE userID = userID AND imdbID = imdbID;
         console.log(removedMovie)
 
         return res.status(StatusCodes.OK).json({

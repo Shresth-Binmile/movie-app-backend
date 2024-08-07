@@ -24,7 +24,7 @@ export const getCommentsAndRatings = async(req: Request, res: Response) => {
         const decodedToken = JSON.parse(JSON.stringify(jwt.verify(token, ENV.JWT_SECRET_KEY)))
         const userID = decodedToken.id
 
-        const comsRatsData = await comRats.findAll({where: {imdbID}})
+        const comsRatsData = await comRats.findAll({where: {imdbID}})         // SELECT * FROM comRats WHERE imdbID = imdbID;
 
         return res.status(StatusCodes.OK).json({
             success: true,
@@ -66,14 +66,14 @@ export const addCommentsAndRatings = async(req: Request, res: Response) => {
         //     comments,
         //     ratings
         // })
-        const newComment = await comRats.create({
+        const newComment = await comRats.create({                         // INSERT INTO comRats (imdbID, userID, comments, ratings) VALUES (imdbID, userID, comments, ratings);
             imdbID,
             userID,
             comments,
             ratings
         })
 
-        await comRats.update({ratings: ratings}, {where: {userID}})
+        await comRats.update({ratings: ratings}, {where: {userID}})       // UPDATE comRats SET ratings = ratings WHERE userID = userID;
 
         return res.status(StatusCodes.CREATED).json({
             success: true,
